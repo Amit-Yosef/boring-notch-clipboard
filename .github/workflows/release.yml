@@ -1,0 +1,48 @@
+name: Build & Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Build Bundle
+        run: |
+          xcodebuild \
+            -project BoringClipboard.xcodeproj \
+            -scheme BoringClipboard \
+            -configuration Release \
+            -derivedDataPath build \
+            DEPLOYMENT_LOCATION=YES \
+            DSTROOT=build/products
+
+      - name: Locate built bundle
+        run: |
+          BUNDLE_PATH=$(find build/products -name "BoringClipboard.bundle" | head -1)
+          echo "BUNDLE_PATH=$BUNDLE_PATH" >> $GITHUB_ENV
+
+      - name: Ad-hoc sign bundle
+        run: codesign --force --deep --sign - "$BUNDLE_PATH"
+
+      - name: Zip bundle
+        run: |
+          cd "$(dirname "$BUNDLE_PATH")"
+          zip -r "$GITHUB_WORKSPACE/BoringClipboard.bundle.zip" BoringClipboard.bundle
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            BoringClipboard.bundle.zip
+            boring-extension.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

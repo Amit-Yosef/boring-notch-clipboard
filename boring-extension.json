@@ -1,0 +1,7 @@
+{
+  "extensionID": "dev.boringnotch.clipboard",
+  "displayName": "Clipboard",
+  "minAppVersion": "1.0.0",
+  "principalClass": "BoringClipboardExtension",
+  "bundleAssetName": "BoringClipboard.bundle.zip"
+}
