@@ -22,16 +22,14 @@ jobs:
             -scheme BoringClipboard \
             -configuration Release \
             -derivedDataPath build \
-            DEPLOYMENT_LOCATION=YES \
-            DSTROOT=build/products
+            build
 
-      - name: Locate built bundle
+      - name: Locate and sign bundle
         run: |
-          BUNDLE_PATH=$(find build/products -name "BoringClipboard.bundle" | head -1)
+          BUNDLE_PATH=$(find build/Build/Products -name "BoringClipboard.bundle" | head -1)
+          echo "Found bundle at: $BUNDLE_PATH"
           echo "BUNDLE_PATH=$BUNDLE_PATH" >> $GITHUB_ENV
-
-      - name: Ad-hoc sign bundle
-        run: codesign --force --deep --sign - "$BUNDLE_PATH"
+          codesign --force --deep --sign - "$BUNDLE_PATH"
 
       - name: Zip bundle
         run: |
