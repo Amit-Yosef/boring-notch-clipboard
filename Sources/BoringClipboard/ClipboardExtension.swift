@@ -14,7 +14,7 @@ public class ClipboardExtension: NSObject, BoringExtensionProtocol {
     public static let extensionID = "dev.boringnotch.clipboard"
     public static let displayName = "Clipboard"
     public static let iconSymbol  = "clipboard"
-    public static let version     = "1.0.0"
+    public static let extensionVersion = "1.0.0"
 
     public func makeContentView() -> NSView {
         NSHostingView(rootView: ClipboardView())

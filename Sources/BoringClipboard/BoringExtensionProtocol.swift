@@ -11,6 +11,6 @@ import AppKit
     static var extensionID: String { get }
     static var displayName: String { get }
     static var iconSymbol: String { get }
-    static var version: String { get }
+    static var extensionVersion: String { get }
     func makeContentView() -> NSView
 }
