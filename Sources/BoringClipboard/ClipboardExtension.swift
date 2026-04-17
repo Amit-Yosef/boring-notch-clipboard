@@ -11,12 +11,12 @@ import SwiftUI
 
 @objc(BoringClipboardExtension)
 public class ClipboardExtension: NSObject, BoringExtensionProtocol {
-    public static let extensionID = "dev.boringnotch.clipboard"
-    public static let displayName = "Clipboard"
-    public static let iconSymbol  = "clipboard"
-    public static let extensionVersion = "1.0.0"
+    @objc public static func bn_extensionIdentifier() -> String { "dev.boringnotch.clipboard" }
+    @objc public static func bn_displayName() -> String { "Clipboard" }
+    @objc public static func bn_iconSymbol() -> String { "clipboard" }
+    @objc public static func bn_extensionVersion() -> String { "1.0.3" }
 
-    public func makeContentView() -> NSView {
+    @objc public func bn_makeContentView() -> NSView {
         NSHostingView(rootView: ClipboardView())
     }
 }

@@ -2,15 +2,16 @@
 //  BoringExtensionProtocol.swift
 //  BoringClipboard
 //
-//  Copy of the shared protocol — must match the main app's declaration exactly.
+//  Must match the main app’s `BoringExtensionProtocol.swift` (same `@objc` name and `bn_*` selectors).
 //
 
 import AppKit
 
-@objc public protocol BoringExtensionProtocol: NSObjectProtocol {
-    static var extensionID: String { get }
-    static var displayName: String { get }
-    static var iconSymbol: String { get }
-    static var extensionVersion: String { get }
-    func makeContentView() -> NSView
+@objc(BoringExtensionProtocol)
+public protocol BoringExtensionProtocol: NSObjectProtocol {
+    @objc static func bn_extensionIdentifier() -> String
+    @objc static func bn_displayName() -> String
+    @objc static func bn_iconSymbol() -> String
+    @objc static func bn_extensionVersion() -> String
+    @objc func bn_makeContentView() -> NSView
 }
